@@ -40,6 +40,8 @@ def transfer(model, model_weights):
 
 # draw the body keypoint and lims
 def draw_bodypose(canvas, candidate, subset):
+    drawing_joint = None
+    drawing_joints = []
     stickwidth = 4
     limbSeq = [[2, 3], [2, 6], [3, 4], [4, 5], [6, 7], [7, 8], [2, 9], [9, 10], \
                [10, 11], [2, 12], [12, 13], [13, 14], [2, 1], [1, 15], [15, 17], \
@@ -55,6 +57,15 @@ def draw_bodypose(canvas, candidate, subset):
                 continue
             x, y = candidate[index][0:2]
             cv2.circle(canvas, (int(x), int(y)), 4, colors[i], thickness=-1)
+            ## TODO 2: change joint used for drawing
+            if i in [4]:
+                drawing_joints.append([int(x), int(y)])
+            ##
+    if drawing_joints:
+        drawing_joints = np.array(drawing_joints)
+        x = drawing_joints[:,0].mean()
+        y = drawing_joints[:,1].mean()
+        drawing_joint = [int(x), int(y)]
     for i in range(17):
         for n in range(len(subset)):
             index = subset[n][np.array(limbSeq[i]) - 1]
@@ -72,7 +83,7 @@ def draw_bodypose(canvas, candidate, subset):
             canvas = cv2.addWeighted(canvas, 0.4, cur_canvas, 0.6, 0)
     # plt.imsave("preview.jpg", canvas[:, :, [2, 1, 0]])
     # plt.imshow(canvas[:, :, [2, 1, 0]])
-    return canvas
+    return canvas, drawing_joint
 
 def draw_handpose(canvas, all_hand_peaks, show_number=False):
     edges = [[0, 1], [1, 2], [2, 3], [3, 4], [0, 5], [5, 6], [6, 7], [7, 8], [0, 9], [9, 10], \

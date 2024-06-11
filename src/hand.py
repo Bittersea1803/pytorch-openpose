@@ -23,7 +23,7 @@ class Hand(object):
 
     def __call__(self, oriImg):
         scale_search = [0.5, 1.0, 1.5, 2.0]
-        # scale_search = [0.5]
+        # scale_search = [1.0]
         boxsize = 368
         stride = 8
         padValue = 128
@@ -31,7 +31,6 @@ class Hand(object):
         multiplier = [x * boxsize / oriImg.shape[0] for x in scale_search]
         heatmap_avg = np.zeros((oriImg.shape[0], oriImg.shape[1], 22))
         # paf_avg = np.zeros((oriImg.shape[0], oriImg.shape[1], 38))
-
         for m in range(len(multiplier)):
             scale = multiplier[m]
             imageToTest = cv2.resize(oriImg, (0, 0), fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC)
@@ -54,7 +53,6 @@ class Hand(object):
             heatmap = cv2.resize(heatmap, (oriImg.shape[1], oriImg.shape[0]), interpolation=cv2.INTER_CUBIC)
 
             heatmap_avg += heatmap / len(multiplier)
-
         all_peaks = []
         for part in range(21):
             map_ori = heatmap_avg[:, :, part]

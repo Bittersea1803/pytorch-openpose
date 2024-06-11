@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/openpose_user/src/openpose/finger_tracking_ws/install/setup.sh

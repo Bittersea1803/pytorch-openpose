@@ -11,13 +11,20 @@ from src.hand import Hand
 body_estimation = Body('model/body_pose_model.pth')
 hand_estimation = Hand('model/hand_pose_model.pth')
 
-test_image = 'images/demo.jpg'
+test_image = 'images/3.png'
+is_only_hand = True
 oriImg = cv2.imread(test_image)  # B,G,R order
-candidate, subset = body_estimation(oriImg)
 canvas = copy.deepcopy(oriImg)
-canvas = util.draw_bodypose(canvas, candidate, subset)
-# detect hand
-hands_list = util.handDetect(candidate, subset, oriImg)
+
+if is_only_hand: 
+    hands_list = np.array([[0, 0, oriImg.shape[0], True]])
+    #hands_list = np.array([[251, 134, 350, True]])
+else:
+    candidate, subset = body_estimation(oriImg)
+    canvas = util.draw_bodypose(canvas, candidate, subset)
+    # detect hand
+    hands_list = util.handDetect(candidate, subset, oriImg)
+
 
 all_hand_peaks = []
 for x, y, w, is_left in hands_list:

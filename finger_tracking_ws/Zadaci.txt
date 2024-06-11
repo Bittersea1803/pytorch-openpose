@@ -1,0 +1,20 @@
+Zadatak 1:
+Dodati opciju za crtanje linija u jednoj boji pomoću tipke C.
+
+Zadatak 2:
+Promijeniti "zglob" koji se koristi za crtanje linije. (util.py)
+
+Zadatak 3:
+Dodati opciju koja omogućava mijenjanje slike za iscrtavanje pritiskom tipke N.
+
+Zadatak 4:
+Dodati novu sliku u listu slika za iscrtavanje.
+
+Zadatak 5:
+Dodati srednje brzi način iscrtavanja linije.
+
+Zadatak 6:
+Omogućiti smanjivanje i povećavanje brzine za proizvoljnu vrijednost.
+
+Zadatak 7:
+Dodati opciju koja omogućava brisanje cijele linije u slučaju da je "zglob" u gornjem desnom kutu.
